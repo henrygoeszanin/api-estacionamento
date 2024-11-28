@@ -14,6 +14,8 @@ Esta é uma API construída com Fastify, TypeORM e PostgreSQL. A API fornece fun
 
 Crie um arquivo `.env` na raiz do projeto e adicione a seguinte variável de ambiente:
 
+JWT_SECRET=`your_secret_key`
+
 Substitua `your_secret_key` por uma chave secreta de sua escolha.
 
 ### Instalação
