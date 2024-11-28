@@ -1,4 +1,4 @@
-# Fastify API
+# Meus carros API
 
 Esta é uma API construída com Fastify, TypeORM e PostgreSQL. A API fornece funcionalidades para gerenciar usuários e seus carros, incluindo autenticação JWT.
 
