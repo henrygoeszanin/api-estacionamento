@@ -3,6 +3,7 @@ import pinoPretty from 'pino-pretty';
 import { userController } from './modules/user/controller/userController';
 import authPlugin from './plugins/authPlugin';
 import { carController } from './modules/car/controller/carController';
+import { loginController } from './modules/auth/controller/loginController';
 
 // Configura o logger
 const stream = pinoPretty({
@@ -20,6 +21,9 @@ const fastify = Fastify({ logger });
 
 // Registra o plugin de autenticação
 fastify.register(authPlugin);
+
+// Registra o controlador de login
+fastify.register(loginController);
 
 // Registra o controlador de usuário
 fastify.register(userController);

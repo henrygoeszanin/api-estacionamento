@@ -1,9 +1,9 @@
 import { AppDataSource } from '../../../database/data-source';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { User } from '../entity/User';
+import { User } from '../../user/entity/User';
 
 // Controlador para login de usuário
-export const loginUserHandler = async (request: FastifyRequest, reply: FastifyReply) => {
+export const loginHandler = async (request: FastifyRequest, reply: FastifyReply) => {
   const { email, password } = request.body as { email: string; password: string };
   const userRepo = AppDataSource.getRepository(User);
   const user = await userRepo.findOneBy({ email });

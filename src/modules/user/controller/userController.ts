@@ -1,7 +1,6 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { createUserHandler } from '../handler/createUserHandler';
 import { getUserHandler } from '../handler/getUserHandler';
-import { loginUserHandler } from '../handler/loginUserHandler';
 
 // Declaração do método de autenticação no Fastify
 declare module 'fastify' {
@@ -17,12 +16,6 @@ export const userController = (fastify: FastifyInstance) => {
     fastify.log.info('Creating a new user');
     const user = await createUserHandler(request.body as { name: string; email: string; password: string });
     return reply.send(user);
-  });
-
-  // Rota para login de usuário
-  fastify.post('/login', async (request: FastifyRequest, reply: FastifyReply) => {
-    fastify.log.info('User login attempt');
-    return loginUserHandler(request, reply);
   });
 
   // Rota para obter todos os usuários, protegida por autenticação
