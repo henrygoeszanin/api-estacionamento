@@ -4,17 +4,19 @@ import { userController } from './modules/user/controller/userController';
 import authPlugin from './plugins/authPlugin';
 import { carController } from './modules/car/controller/carController';
 import { loginController } from './modules/auth/controller/loginController';
+import { errorHandler } from './middlewares/errorHandling';
 
 // Configura o logger
 const stream = pinoPretty({
   colorize: true,
   translateTime: 'SYS:standard',
-  ignore: 'pid,hostname'
+  ignore: 'pid,hostname,reqId',
+  singleLine: true,
 });
 
 const logger = {
   level: 'info',
-  stream
+  stream,
 };
 
 const fastify = Fastify({ logger });
@@ -30,6 +32,8 @@ fastify.register(userController);
 
 // Registra o controlador de carros
 fastify.register(carController);
+
+fastify.setErrorHandler(errorHandler);
 
 // Inicia o servidor na porta 3000
 fastify.listen({ port: 3000 }, (err, address) => {

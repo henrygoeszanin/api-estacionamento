@@ -1,0 +1,25 @@
+datasource db {
+  provider = "sqlite" // ou "sqlite" dependendo do ambiente
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    String      @id @unique
+  name  String
+  email String      @unique
+  password String
+  cars  Car[] 
+}
+
+model Car {
+  id       String   @id @unique
+  brand    String
+  plate     String   @unique
+  model    String
+  ownerId  String
+  owner    User     @relation(fields: [ownerId], references: [id])
+}

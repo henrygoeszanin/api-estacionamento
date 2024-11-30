@@ -7,128 +7,243 @@
   },
   "item": [
     {
-      "name": "Create User",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      "name": "Usuários",
+      "item": [
+        {
+          "name": "Criar Usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["users"]
+            }
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\"\n}"
         },
-        "url": {
-          "raw": "http://localhost:3000/users",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["users"]
-        }
-      }
-    },
-    {
-      "name": "Login User",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+        {
+          "name": "Login Usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["login"]
+            }
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"password123\"\n}"
         },
-        "url": {
-          "raw": "http://localhost:3000/login",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["login"]
-        }
-      }
-    },
-    {
-      "name": "Get Users",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer <your_jwt_token>"
+        {
+          "name": "Obter Usuários",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <your_jwt_token>"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["users"]
+            }
           }
-        ],
-        "url": {
-          "raw": "http://localhost:3000/users",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["users"]
-        }
-      }
-    },
-    {
-      "name": "Create Car",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Authorization",
-            "value": "Bearer <your_jwt_token>"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"brand\": \"Toyota\",\n  \"model\": \"Corolla\"\n}"
         },
-        "url": {
-          "raw": "http://localhost:3000/cars",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["cars"]
-        }
-      }
-    },
-    {
-      "name": "Get User Cars",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer <your_jwt_token>"
+        {
+          "name": "Atualizar Usuário",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <your_jwt_token>"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"email\": \"john.doe.updated@example.com\",\n  \"password\": \"newpassword123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["users"]
+            }
           }
-        ],
-        "url": {
-          "raw": "http://localhost:3000/cars/user",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["cars", "user"]
+        },
+        {
+          "name": "Deletar Usuário",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <your_jwt_token>"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["users"]
+            }
+          }
         }
-      }
+      ]
     },
     {
-      "name": "Get All Cars",
-      "request": {
-        "method": "GET",
-        "url": {
-          "raw": "http://localhost:3000/cars",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["cars"]
+      "name": "Carros",
+      "item": [
+        {
+          "name": "Criar Carro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <your_jwt_token>"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"brand\": \"Toyota\",\n  \"model\": \"Corolla\",\n  \"plate\": \"ABC-1234\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/cars",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cars"]
+            }
+          }
+        },
+        {
+          "name": "Obter Todos os Carros",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/cars",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cars"]
+            }
+          }
+        },
+        {
+          "name": "Obter Carros do Usuário",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <your_jwt_token>"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/cars/user",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cars", "user"]
+            }
+          }
+        },
+        {
+          "name": "Obter Carro por ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/cars/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cars", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Atualizar Carro",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <your_jwt_token>"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"brand\": \"Toyota\",\n  \"model\": \"Corolla Altis\",\n  \"plate\": \"XYZ-9876\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/cars/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cars", ":id"]
+            }
+          }
+        },
+        {
+          "name": "Deletar Carro",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <your_jwt_token>"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/cars/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cars", ":id"]
+            }
+          }
         }
-      }
+      ]
     }
   ]
 }

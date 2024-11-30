@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 // Interface para o payload JWT
 interface JwtPayload {
-  id: number;
+  id: string;
   email: string;
 }
 

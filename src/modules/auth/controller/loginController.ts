@@ -10,8 +10,6 @@ declare module 'fastify' {
 
 // Controlador para rota de login
 export const loginController = (fastify: FastifyInstance) => {
-
-  // Rota para login de usuário
   fastify.post('/login', async (request: FastifyRequest, reply: FastifyReply) => {
     fastify.log.info('User login attempt');
     return loginHandler(request, reply);

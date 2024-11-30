@@ -22,6 +22,6 @@ export default fp(async (fastify) => {
 // Declaração do userId no FastifyRequest
 declare module 'fastify' {
   interface FastifyRequest {
-    userId?: number;
+    userId?: string;
   }
 }

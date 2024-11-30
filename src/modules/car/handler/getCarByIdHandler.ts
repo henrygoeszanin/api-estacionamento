@@ -3,10 +3,10 @@ import { NotFoundError } from '../../../error/errors';
 
 const prisma = new PrismaClient();
 
-// Handler para obter os carros de um usuário específico
-export const getUserCarsHandler = async (userId: string) => {
-  const cars = await prisma.car.findMany({
-    where: { ownerId: userId },
+// Handler para obter um carro por ID
+export const getCarByIdHandler = async (carId: string) => {
+  const car = await prisma.car.findUnique({
+    where: { id: carId },
     include: {
       owner: {
         select: {
@@ -18,9 +18,9 @@ export const getUserCarsHandler = async (userId: string) => {
     },
   });
 
-  if (!cars) {
-    throw new NotFoundError('No cars found for this user');
+  if (!car) {
+    throw new NotFoundError('Car not found');
   }
 
-  return cars;
+  return car;
 };
