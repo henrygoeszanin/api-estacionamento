@@ -1,11 +1,9 @@
 import Fastify from 'fastify';
 import pinoPretty from 'pino-pretty';
-import { userController } from './modules/user/controller/userController';
 import authPlugin from './plugins/authPlugin';
-import { carController } from './modules/car/controller/carController';
-import { loginController } from './modules/auth/controller/loginController';
 import { errorHandler } from './middlewares/errorHandling';
 import fastifyCookie from '@fastify/cookie';
+import { registerControllers } from './modules/registerControllers';
 
 // Configura o logger
 const stream = pinoPretty({
@@ -31,19 +29,12 @@ fastify.register(fastifyCookie, {
 // Registra o plugin de autenticação
 fastify.register(authPlugin);
 
-// Registra o controlador de login
-fastify.register(loginController);
-
-// Registra o controlador de usuário
-fastify.register(userController);
-
-// Registra o controlador de carros
-fastify.register(carController);
+registerControllers(fastify);
 
 fastify.setErrorHandler(errorHandler);
 
 // Inicia o servidor na porta 3000
-fastify.listen({ port: 3000 }, (err, address) => {
+fastify.listen({ port: 3000, host: '127.0.0.1' }, (err, address) => {
   if (err) {
     fastify.log.error(err);
     process.exit(1);

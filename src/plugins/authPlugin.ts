@@ -11,6 +11,9 @@ export default fp(async (fastify) => {
   // Adiciona um método de autenticação ao Fastify
   fastify.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
     try {
+
+      console.log('request.cookies', request.cookies);
+
       // Extrai o token JWT do cookie manualmente
       const token = request.cookies.token;
       if (!token) {
@@ -28,16 +31,6 @@ export default fp(async (fastify) => {
 });
 
 // Declaração do usuário no FastifyRequest
-// Estender a interface FastifyJWT no módulo fastify-jwt
-declare module 'fastify-jwt' {
-  interface FastifyJWT {
-    payload: { id: string; email: string }; // Tipo do payload
-    user: {
-      id: string;
-      email: string;
-    }; // Tipo do usuário
-  }
-}
 // Estender a interface FastifyJWT no módulo fastify-jwt
 declare module 'fastify-jwt' {
   interface FastifyJWT {

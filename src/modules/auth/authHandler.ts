@@ -1,12 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import bcrypt from 'bcrypt';
-import { UnauthorizedError } from '../../../error/errors';
+import { UnauthorizedError } from '../../error/errors';
 
 const prisma = new PrismaClient();
 
 // Controlador para login de usuário
-export const loginHandler = async (request: FastifyRequest, reply: FastifyReply) => {
+export const authHandler = async (request: FastifyRequest, reply: FastifyReply) => {
   const { email, password } = request.body as { email: string; password: string };
   const user = await prisma.user.findUnique({
     where: { email },
