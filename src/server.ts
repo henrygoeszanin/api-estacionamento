@@ -9,6 +9,7 @@ import authPlugin from './plugins/authPlugin';
 import { errorHandler } from './middlewares/errorHandling';
 import { registerControllers } from './modules/registerControllers';
 import fastifyHealthcheck from 'fastify-healthcheck';
+import fastifyCors from '@fastify/cors';
 
 // Configura o logger
 const stream = pinoPretty({
@@ -39,6 +40,13 @@ fastify.register(fastifyHealthcheck, {
 });
 
 fastify.register(fastifyCompress); // Comprime as respostas HTTP
+
+// Registra o plugin de CORS
+fastify.register(fastifyCors, {
+  origin: '*', // Permite todas as origens. Ajuste conforme necessário.
+  methods: ['GET', 'PUT', 'POST', 'DELETE', 'PATCH'], // Métodos permitidos
+  allowedHeaders: ['Content-Type'], // Cabeçalhos permitidos
+});
 
 // Registra o plugin de cookies
 fastify.register(fastifyCookie, {
