@@ -5,6 +5,7 @@ import authPlugin from './plugins/authPlugin';
 import { carController } from './modules/car/controller/carController';
 import { loginController } from './modules/auth/controller/loginController';
 import { errorHandler } from './middlewares/errorHandling';
+import fastifyCookie from '@fastify/cookie';
 
 // Configura o logger
 const stream = pinoPretty({
@@ -20,6 +21,12 @@ const logger = {
 };
 
 const fastify = Fastify({ logger });
+
+// Registra o plugin de cookies
+fastify.register(fastifyCookie, {
+  secret: process.env.COOKIE_SECRET || 'your-secure-secret', // Use variável de ambiente
+  parseOptions: {} // Opções adicionais de parsing
+});
 
 // Registra o plugin de autenticação
 fastify.register(authPlugin);

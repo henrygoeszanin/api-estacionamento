@@ -19,5 +19,14 @@ export const loginHandler = async (request: FastifyRequest, reply: FastifyReply)
 
   // Gera um token JWT para o usuário
   const token = await reply.jwtSign({ id: user.id, email: user.email }, { expiresIn: '12h' });
-  return reply.send({ token });
+
+  // Define o cookie JWT
+  reply.setCookie('token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production', // true in production
+    sameSite: 'strict',
+    path: '/',
+  });
+
+  return reply.send({ message: 'Login successful' });
 };
