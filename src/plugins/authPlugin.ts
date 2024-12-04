@@ -12,8 +12,6 @@ export default fp(async (fastify) => {
   fastify.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
     try {
 
-      console.log('request.cookies', request.cookies);
-
       // Extrai o token JWT do cookie manualmente
       const token = request.cookies.token;
       if (!token) {
