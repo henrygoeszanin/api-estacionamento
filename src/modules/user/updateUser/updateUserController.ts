@@ -1,6 +1,5 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { NotFoundError, BadRequestError } from "../../../error/errors";
-import { extractUserId } from "../../../middlewares/extractUserId";
 import { updateUserHandler } from "./updateUserhandler";
 
 
@@ -8,7 +7,7 @@ export const updateUserController = (fastify: FastifyInstance) => {
 
 fastify.patch(
     '/users',
-    { preValidation: [fastify.authenticate, extractUserId] },
+    { preValidation: [fastify.authenticate] },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const userId = request.user.id;
       fastify.log.info(`Updating user with ID: ${userId}`);

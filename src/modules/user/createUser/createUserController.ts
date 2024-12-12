@@ -6,7 +6,6 @@ export const createUserController = (fastify: FastifyInstance) => {
 
 fastify.post(
     '/users',
-    { preValidation: [fastify.authenticate] },
     async (request: FastifyRequest, reply: FastifyReply) => {
     fastify.log.info('Creating a new user');
     try {

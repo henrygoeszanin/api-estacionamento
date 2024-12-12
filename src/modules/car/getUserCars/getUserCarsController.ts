@@ -1,13 +1,12 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { NotFoundError } from "../../../error/errors";
-import { extractUserId } from "../../../middlewares/extractUserId";
 import { getUserCarsHandler } from "./getUserCarsHandler";
 
 export const getUserCarsController = (fastify: FastifyInstance) => {
 
 fastify.get(
     '/cars/user',
-    { preValidation: [fastify.authenticate, extractUserId] },
+    { preValidation: [fastify.authenticate] },
     async (request: FastifyRequest, reply: FastifyReply) => {
       fastify.log.info(`Fetching cars for userId: ${request.user.id}`);
       try {

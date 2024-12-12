@@ -1,13 +1,12 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { NotFoundError } from "../../../error/errors";
-import { extractUserId } from "../../../middlewares/extractUserId";
 import { deleteUserHandler } from "./deleteUserHandler";
 
 export const deleteUserController = (fastify: FastifyInstance) => {
 
 fastify.delete(
     '/users',
-    { preValidation: [fastify.authenticate, extractUserId] },
+    { preValidation: [fastify.authenticate] },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const userId = request.user.id;
       fastify.log.info(`Deleting user with ID: ${userId}`);

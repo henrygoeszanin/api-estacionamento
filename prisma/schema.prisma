@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite" // ou "sqlite" dependendo do ambiente
+  provider = "sqlite" // sqlite para desenvolvimento
   url      = "file:./dev.db"
 }
 
@@ -22,4 +22,20 @@ model Car {
   model    String
   ownerId  String
   owner    User     @relation(fields: [ownerId], references: [id])
+  details  CarDetails?
+}
+
+model CarDetails {
+  id                                String @id @unique
+  carId                             String @unique
+  car                               Car    @relation(fields: [carId], references: [id])
+  cor                               String
+  ano                               String
+  anoModelo                         String
+  uf                                String
+  municipio                         String
+  chassi                            String
+  dataAtualizacaoCaracteristicas    String
+  dataAtualizacaoRouboFurto         String
+  dataAtualizacaoAlarme             String
 }

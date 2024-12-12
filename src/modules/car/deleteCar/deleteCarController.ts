@@ -1,13 +1,12 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { NotFoundError, ForbiddenError } from "../../../error/errors";
-import { extractUserId } from "../../../middlewares/extractUserId";
 import { deleteCarHandler } from "./deleteCarHandler";
 
 export const deleteCarController = (fastify: FastifyInstance) => {
 
 fastify.delete(
     '/cars/:id',
-    { preValidation: [fastify.authenticate, extractUserId] },
+    { preValidation: [fastify.authenticate] },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const carId = (request.params as { id: string }).id;
       const userId = request.user.id;

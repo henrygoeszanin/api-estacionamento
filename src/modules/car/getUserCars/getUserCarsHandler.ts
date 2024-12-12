@@ -1,10 +1,18 @@
 import { PrismaClient } from '@prisma/client';
 import { NotFoundError } from '../../../error/errors';
+import { setCache, getCache } from '../../../utils/redisClient';
 
 const prisma = new PrismaClient();
 
 // Handler para obter os carros de um usuário específico
 export const getUserCarsHandler = async (userId: string) => {
+  const cacheKey = `userCars:${userId}`;
+  const cachedCars = await getCache(cacheKey);
+
+  if (cachedCars) {
+    return JSON.parse(cachedCars);
+  }
+
   const cars = await prisma.car.findMany({
     where: { ownerId: userId },
     include: {
@@ -21,6 +29,8 @@ export const getUserCarsHandler = async (userId: string) => {
   if (!cars) {
     throw new NotFoundError('No cars found for this user');
   }
+
+  await setCache(cacheKey, JSON.stringify(cars));
 
   return cars;
 };

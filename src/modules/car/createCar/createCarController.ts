@@ -1,13 +1,13 @@
 import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
 import { BadRequestError, NotFoundError } from "../../../error/errors";
-import { extractUserId } from "../../../middlewares/extractUserId";
 import { createCarHandler } from "./createCarHandler";
 
 export const createCarController = (fastify: FastifyInstance) => {
 fastify.post(
     '/cars',
-    { preValidation: [fastify.authenticate, extractUserId] },
+    { preValidation: [fastify.authenticate] },
     async (request: FastifyRequest, reply: FastifyReply) => {
+      
       const { brand, model, plate } = request.body as {
         brand: string;
         model: string;

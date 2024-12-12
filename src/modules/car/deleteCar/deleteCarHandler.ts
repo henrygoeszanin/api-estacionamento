@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { NotFoundError, ForbiddenError } from '../../../error/errors';
+import { deleteCache } from '../../../utils/redisClient';
 
 const prisma = new PrismaClient();
 
@@ -22,6 +23,11 @@ export const deleteCarHandler = async (carId: string, userId: string) => {
   await prisma.car.delete({
     where: { id: carId },
   });
+
+  // Exclui o cache relacionado
+  await deleteCache(`car:${carId}`);
+  await deleteCache(`userCars:${userId}`);
+  await deleteCache('allCars');
 
   return { message: 'Car deleted successfully' };
 };

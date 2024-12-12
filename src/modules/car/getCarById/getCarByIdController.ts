@@ -1,12 +1,11 @@
 import { FastifyInstance } from "fastify";
 import { NotFoundError } from "../../../error/errors";
 import { getCarByIdHandler } from "./getCarByIdHandler";
-import { extractUserId } from "../../../middlewares/extractUserId";
 
 export const getCarByIdController = (fastify: FastifyInstance) => {
   fastify.get<{ Params: { id: string } }>(
     '/cars/:id',
-    { preValidation: [fastify.authenticate, extractUserId] },
+    { preValidation: [fastify.authenticate] },
     async (request, reply) => {
       const carId = request.params.id;
       fastify.log.info(`Fetching car with ID: ${carId}`);
