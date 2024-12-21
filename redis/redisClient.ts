@@ -3,7 +3,16 @@ import Redis from 'ioredis';
 // Cria um cliente Redis
 const redis = new Redis({
   host: process.env.REDIS_HOST ?? 'localhost', // ou o endereço do seu servidor Redis
-  port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : 6379 // porta padrão do Redis
+  port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : 6379, // porta padrão do Redis
+  retryStrategy(times) {
+    const delay = Math.min(times * 100, 2001); // Aumenta o tempo de espera entre as tentativas, até um máximo de 2 segundos
+    console.log(`Tentativa de reconexão ao Redis em ${delay}ms`);
+    if (delay > 2000) {
+      console.error('Não foi possível reconectar ao Redis, encerrando aplicação...');
+      return undefined;
+    }
+    return delay;
+  },
 });
 
 // Lida com eventos de erro
