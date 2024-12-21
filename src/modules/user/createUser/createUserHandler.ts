@@ -34,8 +34,10 @@ export const createUserHandler = async (data: { name: string; email: string; pas
     },
   });
 
-// Exclui o cache relacionado
-await deleteCache(CACHE_KEYS.ALL_USERS);
+  // Exclui o cache relacionado
+  await deleteCache(CACHE_KEYS.ALL_USERS);
+  // Atribui o cache relacionado
+  await deleteCache(CACHE_KEYS.USER(user.id));
 
   return user;
 };
