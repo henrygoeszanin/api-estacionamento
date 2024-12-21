@@ -9,7 +9,7 @@
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
     },
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts", "redis/redisClient.ts"],
     "exclude": ["node_modules"]
   }
   

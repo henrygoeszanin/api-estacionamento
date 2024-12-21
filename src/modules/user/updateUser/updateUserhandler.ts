@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import { NotFoundError, BadRequestError } from '../../../error/errors';
+import { NotFoundError } from '../../../error/errors';
 import bcrypt from 'bcrypt';
+import { deleteCache, setCache } from '../../../../redis/redisClient';
+import { CACHE_KEYS } from '../../../../redis/redisCacheKeys';
 
 const prisma = new PrismaClient();
 
@@ -36,6 +38,9 @@ export const updateUserHandler = async (
       email: true,
     },
   });
+
+  await deleteCache(CACHE_KEYS.ALL_USERS);
+  await setCache(CACHE_KEYS.USER(userId), JSON.stringify(updatedUser));
 
   return updatedUser;
 };

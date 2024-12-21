@@ -2,6 +2,8 @@ import { PrismaClient } from '@prisma/client';
 import { BadRequestError } from '../../../error/errors';
 import { ulid } from 'ulid';
 import bcrypt from 'bcrypt';
+import { CACHE_KEYS } from '../../../../redis/redisCacheKeys';
+import { deleteCache } from '../../../../redis/redisClient';
 
 const prisma = new PrismaClient();
 
@@ -31,6 +33,9 @@ export const createUserHandler = async (data: { name: string; email: string; pas
       id: true,
     },
   });
+
+// Exclui o cache relacionado
+await deleteCache(CACHE_KEYS.ALL_USERS);
 
   return user;
 };

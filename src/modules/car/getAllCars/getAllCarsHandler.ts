@@ -1,13 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import { NotFoundError } from '../../../error/errors';
-import { setCache, getCache } from '../../../utils/redisClient';
+import { setCache, getCache } from '../../../../redis/redisClient';
+import { CACHE_KEYS } from '../../../../redis/redisCacheKeys';
 
 const prisma = new PrismaClient();
 
 // Handler para obter todos os carros
 export const getAllCarsHandler = async () => {
-  const cacheKey = 'allCars';
-  const cachedCars = await getCache(cacheKey);
+  const cachedCars = await getCache(CACHE_KEYS.ALL_CARS);
 
   if (cachedCars) {
     return JSON.parse(cachedCars);
@@ -29,7 +29,7 @@ export const getAllCarsHandler = async () => {
     throw new NotFoundError('No cars found');
   }
 
-  await setCache(cacheKey, JSON.stringify(cars));
+  await setCache(CACHE_KEYS.ALL_CARS, JSON.stringify(cars));
 
   return cars;
 };

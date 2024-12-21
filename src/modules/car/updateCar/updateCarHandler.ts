@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { NotFoundError, ForbiddenError } from '../../../error/errors';
-import { deleteCache } from '../../../utils/redisClient';
+import { deleteCache, setCache } from '../../../../redis/redisClient';
+import { CACHE_KEYS } from '../../../../redis/redisCacheKeys';
 
 const prisma = new PrismaClient();
 
@@ -25,10 +26,13 @@ export const updateCarHandler = async (carId: string, userId: string, updateData
     data: updateData,
   });
 
-  // Exclui o cache relacionado
-  await deleteCache(`car:${carId}`);
-  await deleteCache(`userCars:${userId}`);
-  await deleteCache('allCars');
+// Exclui o cache relacionado
+await deleteCache(CACHE_KEYS.CAR(carId));
+await deleteCache(CACHE_KEYS.MY_CARS(userId));
+await deleteCache(CACHE_KEYS.ALL_CARS);
+
+// Atualiza o cache
+await setCache(CACHE_KEYS.CAR(carId), JSON.stringify(updatedCar));
 
   return updatedCar;
 };

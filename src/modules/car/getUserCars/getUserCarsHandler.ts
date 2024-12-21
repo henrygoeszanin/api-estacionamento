@@ -1,12 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import { NotFoundError } from '../../../error/errors';
-import { setCache, getCache } from '../../../utils/redisClient';
+import { setCache, getCache } from '../../../../redis/redisClient';
+import { CACHE_KEYS } from '../../../../redis/redisCacheKeys';
 
 const prisma = new PrismaClient();
 
 // Handler para obter os carros de um usuário específico
 export const getUserCarsHandler = async (userId: string) => {
-  const cacheKey = `userCars:${userId}`;
+  const cacheKey = CACHE_KEYS.MY_CARS(userId);
   const cachedCars = await getCache(cacheKey);
 
   if (cachedCars) {

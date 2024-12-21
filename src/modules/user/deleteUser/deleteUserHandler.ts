@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { NotFoundError } from '../../../error/errors';
+import { CACHE_KEYS } from '../../../../redis/redisCacheKeys';
+import { deleteCache } from '../../../../redis/redisClient';
 
 const prisma = new PrismaClient();
 
@@ -18,6 +20,9 @@ export const deleteUserHandler = async (userId: string) => {
   await prisma.user.delete({
     where: { id: userId },
   });
+
+  await deleteCache(CACHE_KEYS.USER(userId));
+  await deleteCache(CACHE_KEYS.ALL_USERS);
 
   return { message: 'User deleted successfully' };
 };

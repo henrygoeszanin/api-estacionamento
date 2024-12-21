@@ -2,8 +2,8 @@ import Redis from 'ioredis';
 
 // Cria um cliente Redis
 const redis = new Redis({
-  host: 'localhost', // ou o endereço do seu servidor Redis
-  port: 6379 // porta padrão do Redis
+  host: process.env.REDIS_HOST ?? 'localhost', // ou o endereço do seu servidor Redis
+  port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : 6379 // porta padrão do Redis
 });
 
 // Lida com eventos de erro

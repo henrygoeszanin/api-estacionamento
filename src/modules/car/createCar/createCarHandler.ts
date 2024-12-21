@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { NotFoundError, BadRequestError } from '../../../error/errors';
 import { ulid } from 'ulid';
 import axios from 'axios';
-import { deleteCache } from '../../../utils/redisClient';
+import { deleteCache } from '../../../../redis/redisClient';
 
 const prisma = new PrismaClient();
 
@@ -85,8 +85,8 @@ export const createCarHandler = async (data: { brand: string; model: string; own
   });
 
   // Exclui o cache relacionado
-  await deleteCache(`userCars:${data.ownerId}`);
-  await deleteCache('allCars');
+  await deleteCache(CACHE_KEYS.MY_CARS(data.ownerId));
+  await deleteCache(CACHE_KEYS.ALL_CARS);
 
   return car;
 };
