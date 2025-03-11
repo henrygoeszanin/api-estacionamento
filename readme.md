@@ -73,3 +73,36 @@ docker compose up -d
 ### Endpoints
 
 as rotas estão no arquivo endpoints.json na pasta raiz, ele pode ser importado no Postman
+
+#
+
+### Estrutura de pastas
+
+/src
+/domain # Regras de negócio e entidades
+/entities # Modelos de domínio
+/repositories # Interfaces dos repositórios
+/errors # Classes de erro do domínio
+/services # Interfaces de serviços do domínio
+
+/application # Casos de uso e lógica da aplicação
+/dtos # Data Transfer Objects
+/interfaces # Interfaces para serviços externos
+/useCases # Casos de uso da aplicação (regras de aplicação)
+/auth
+/users
+/car
+
+/infrastructure # Implementações de interfaces externas
+/database # Implementações de acesso a dados
+/prisma # Implementações dos repositórios com Prisma
+/repository
+/cache # Implementação de serviços de cache (Redis)
+/auth # Implementação de serviços de autenticação
+
+/presentation # Interface com o mundo externo
+/controllers # Controladores da API
+/middlewares # Middlewares para requisições
+/validation # Validação de dados de entrada
+
+/config # Configurações da aplicação
