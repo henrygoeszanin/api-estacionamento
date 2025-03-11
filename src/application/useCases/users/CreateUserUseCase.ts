@@ -1,4 +1,4 @@
-import { BadRequestError } from '../../../domain/errors/DomainErros';
+import { BadRequestError } from '../../../domain/errors/DomainErrors';
 import { IUserRepository } from '../../../domain/repositories/IUserRepository';
 import { ICacheService } from '../../interfaces/ICacheService';
 import { CreateUserDTO } from '../../dtos/UserDTO';

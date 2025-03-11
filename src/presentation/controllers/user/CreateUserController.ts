@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { PrismaClient } from "@prisma/client";
 import { CreateUserDTO } from "../../../application/dtos/UserDTO";
 import { CreateUserUseCase } from "../../../application/useCases/users/CreateUserUseCase";
-import { BadRequestError } from "../../../domain/errors/DomainErros";
+import { BadRequestError } from "../../../domain/errors/DomainErrors";
 import { RedisCache } from "../../../infrastructure/cache/RedisCache";
 import { PrismaUserRepository } from "../../../infrastructure/database/prisma/repository/PrismaUserRepository";
 

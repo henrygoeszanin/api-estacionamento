@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { PrismaClient } from "@prisma/client";
 import { PrismaUserRepository } from "../../../infrastructure/database/prisma/repository/PrismaUserRepository";
 import { GetUsersUseCase } from "../../../application/useCases/users/GetUsersUseCase";
-import { NotFoundError } from "../../../domain/errors/DomainErros";
+import { NotFoundError } from "../../../domain/errors/DomainErrors";
 import { RedisCache } from "../../../infrastructure/cache/RedisCache";
 
 export class GetUsersController {

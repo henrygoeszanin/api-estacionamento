@@ -1,4 +1,4 @@
-import { UnauthorizedError } from '../../../domain/errors/DomainErros';
+import { UnauthorizedError } from '../../../domain/errors/DomainErrors';
 import { IUserRepository } from '../../../domain/repositories/IUserRepository';
 import { LoginDTO } from '../../dtos/UserDTO';
 import bcrypt from 'bcrypt';

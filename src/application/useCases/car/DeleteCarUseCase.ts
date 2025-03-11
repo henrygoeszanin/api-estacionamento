@@ -1,4 +1,4 @@
-import { ForbiddenError, NotFoundError } from '../../../domain/errors/DomainErros';
+import { ForbiddenError, NotFoundError } from '../../../domain/errors/DomainErrors';
 import { ICarRepository } from '../../../domain/repositories/ICarReporitory';
 import { ICacheService } from '../../interfaces/ICacheService';
 

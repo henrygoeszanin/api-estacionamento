@@ -1,4 +1,4 @@
-import { NotFoundError } from '../../../domain/errors/DomainErros';
+import { NotFoundError } from '../../../domain/errors/DomainErrors';
 import { IUserRepository } from '../../../domain/repositories/IUserRepository';
 import { ICacheService } from '../../interfaces/ICacheService';
 import { CacheKeys } from '../../constants/CacheKeys';

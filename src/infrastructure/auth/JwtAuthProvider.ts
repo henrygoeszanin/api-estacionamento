@@ -41,3 +41,10 @@ declare module '@fastify/jwt' {
     }; // Tipo do usuário
   }
 }
+
+// Add this declaration to inform TypeScript about the authenticate method
+declare module 'fastify' {
+  interface FastifyInstance {
+    authenticate: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+  }
+}

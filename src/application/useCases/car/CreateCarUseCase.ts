@@ -3,7 +3,7 @@ import { IUserRepository } from '../../../domain/repositories/IUserRepository';
 import { ICacheService } from '../../interfaces/ICacheService';
 import { CreateCarDTO } from '../../dtos/CarDTO';
 import { ICarRepository } from '../../../domain/repositories/ICarReporitory';
-import { BadRequestError, NotFoundError } from '../../../domain/errors/DomainErros';
+import { BadRequestError, NotFoundError } from '../../../domain/errors/DomainErrors';
 
 export class CreateCarUseCase {
   constructor(

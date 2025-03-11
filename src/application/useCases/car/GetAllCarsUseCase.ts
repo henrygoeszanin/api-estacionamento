@@ -1,5 +1,5 @@
 import { Car } from '../../../domain/entities/Car';
-import { NotFoundError } from '../../../domain/errors/DomainErros';
+import { NotFoundError } from '../../../domain/errors/DomainErrors';
 import { ICarRepository } from '../../../domain/repositories/ICarReporitory';
 import { ICacheService } from '../../interfaces/ICacheService';
 

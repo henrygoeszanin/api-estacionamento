@@ -1,5 +1,5 @@
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
-import { AppError } from '../../domain/errors/DomainErros';
+import { AppError } from '../../domain/errors/DomainErrors';
 
 export const errorHandler = (error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {
   if (error instanceof AppError) {

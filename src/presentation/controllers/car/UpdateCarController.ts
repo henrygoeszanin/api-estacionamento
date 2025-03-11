@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaCarRepository } from "../../../infrastructure/database/prisma/repository/PrismaCarRepository";
 import { RedisCache } from "../../../infrastructure/cache/RedisCache";
 import { UpdateCarUseCase } from "../../../application/useCases/car/UpdateCarUseCase";
-import { NotFoundError, ForbiddenError } from "../../../domain/errors/DomainErros";
+import { NotFoundError, ForbiddenError } from "../../../domain/errors/DomainErrors";
 
 export class UpdateCarController {
   static register(fastify: FastifyInstance, prismaClient: PrismaClient) {

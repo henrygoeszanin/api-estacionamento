@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { PrismaClient } from "@prisma/client";
 import { DeleteUserUseCase } from "../../../application/useCases/users/DeleteUserUseCase";
-import { NotFoundError } from "../../../domain/errors/DomainErros";
+import { NotFoundError } from "../../../domain/errors/DomainErrors";
 import { RedisCache } from "../../../infrastructure/cache/RedisCache";
 import { PrismaUserRepository } from "../../../infrastructure/database/prisma/repository/PrismaUserRepository";
 

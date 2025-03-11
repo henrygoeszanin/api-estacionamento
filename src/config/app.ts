@@ -8,7 +8,7 @@ import fastifyMetrics from 'fastify-metrics';
 import fastifyHealthcheck from 'fastify-healthcheck';
 import fastifyCors from '@fastify/cors';
 import { PrismaClient } from '@prisma/client';
-import { RouteRegister } from '../presentation/routes/RouteRegister';
+import { routeRegister } from '../presentation/routes/RouteRegister';
 import { errorHandler } from '../presentation/middlewares/errorHandling';
 import jwtAuthProvider from '../infrastructure/auth/JwtAuthProvider';
 
@@ -39,28 +39,15 @@ export function buildApp() {
     secret: process.env.COOKIE_SECRET || 'your-secure-secret',
     parseOptions: {},
   });
+  
+  // Register authentication plugin first
   fastify.register(jwtAuthProvider);
-  fastify.register(fastifyMetrics, {
-    endpoint: '/metrics',
-    routeMetrics: {
-      enabled: { histogram: true, summary: true },
-      overrides: {
-        histogram: {
-          name: 'http_request_duration_seconds',
-          help: 'request duration in seconds',
-          buckets: [0.05, 0.1, 0.5, 1, 3, 5, 10],
-        },
-        summary: {
-          name: 'http_request_summary_seconds',
-          help: 'request duration in seconds summary',
-          percentiles: [0.5, 0.9, 0.95, 0.99],
-        },
-      },
-    },
-  });
-
-  // Registra rotas
-  RouteRegister.registerRoutes(fastify, prismaClient);
+  
+  // Register metrics plugin
+  fastify.register(fastifyMetrics, { /* config */ });
+  
+  // Register routes AFTER auth plugin, passing prismaClient as an option
+  fastify.register(routeRegister, { prismaClient });
 
   // Configura o manipulador de erros
   fastify.setErrorHandler(errorHandler);

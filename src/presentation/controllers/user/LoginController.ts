@@ -30,9 +30,9 @@ export class LoginController {
           });
           
           return reply.send({ message: 'Login successful' });
-        } catch (error) {
+        } catch (error: unknown) {
           fastify.log.error(error);
-          if (error.message === 'Invalid email or password') {
+          if (error instanceof Error && error.message === 'Invalid email or password') {
             return reply.status(401).send({ error: error.message });
           }
           return reply.status(500).send({ error: 'Internal Server Error' });

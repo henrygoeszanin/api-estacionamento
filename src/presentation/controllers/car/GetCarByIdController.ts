@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
 import { PrismaClient } from "@prisma/client";
 import { GetCarByIdUseCase } from "../../../application/useCases/car/GetCarByIdUseCase";
-import { NotFoundError } from "../../../domain/errors/DomainErros";
+import { NotFoundError } from "../../../domain/errors/DomainErrors";
 import { RedisCache } from "../../../infrastructure/cache/RedisCache";
 import { PrismaCarRepository } from "../../../infrastructure/database/prisma/repository/PrismaCarRepository";
 
