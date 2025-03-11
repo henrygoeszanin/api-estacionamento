@@ -1,14 +1,29 @@
 import { PrismaClient } from '@prisma/client';
 import { NotFoundError, BadRequestError } from '../../../error/errors';
 import { ulid } from 'ulid';
-import axios from 'axios';
-import { deleteCache } from '../../../../redis/redisClient';
+import { deleteCache, setCache } from '../../../../redis/redisClient';
 import { CACHE_KEYS } from '../../../../redis/redisCacheKeys';
 
 const prisma = new PrismaClient();
 
+interface CarData {
+  brand: string;
+  model: string;
+  ownerId: string;
+  plate: string;
+  cor: string;
+  ano: string;
+  anoModelo: string;
+  uf: string;
+  municipio: string;
+  chassi: string;
+  dataAtualizacaoCaracteristicas: string;
+  dataAtualizacaoRouboFurto: string;
+  dataAtualizacaoAlarme: string;
+}
+
 // Handler para criar um novo carro
-export const createCarHandler = async (data: { brand: string; model: string; ownerId: string; plate: string }) => {
+export const createCarHandler = async (data: CarData) => {
   // Verifica se o usuário existe
   const owner = await prisma.user.findUnique({
     where: { id: data.ownerId },
@@ -30,36 +45,6 @@ export const createCarHandler = async (data: { brand: string; model: string; own
     throw new BadRequestError('Car already exists for this owner');
   }
 
-  // Configurações da API SINESP
-  const sinespConfig = {
-    host: 'apicarros.com',
-    endpoint: 'consulta',
-    serviceVersion: 'v1',
-    timeout: 5000, // 5 segundos
-    maximumRetry: 3,
-  };
-
-  // Função para buscar informações adicionais do carro
-  const fetchVehicleInfo = async (plate: string) => {
-    const url = `https://${sinespConfig.host}/${sinespConfig.serviceVersion}/${sinespConfig.endpoint}/${plate}`;
-    try {
-      const response = await axios.get(url, { timeout: sinespConfig.timeout });
-      return response.data;
-    } catch (error) {
-      throw new BadRequestError('Erro ao buscar informações do veículo. Verifique a placa e tente novamente.');
-    }
-  };
-
-  // Busca informações adicionais do carro
-  const vehicleInfo = await fetchVehicleInfo(data.plate);
-
-  console.log(vehicleInfo);
-
-  // Verifica se todos os campos necessários estão presentes
-  if (!vehicleInfo.cor || !vehicleInfo.ano || !vehicleInfo.anoModelo || !vehicleInfo.uf || !vehicleInfo.municipio || !vehicleInfo.chassi || !vehicleInfo.dataAtualizacaoCaracteristicasVeiculo || !vehicleInfo.dataAtualizacaoRouboFurto || !vehicleInfo.dataAtualizacaoAlarme) {
-    throw new BadRequestError('Informações do veículo incompletas. Verifique a placa e tente novamente.');
-  }
-
   // Cria o carro e associa o proprietário
   const car = await prisma.car.create({
     data: {
@@ -71,23 +56,32 @@ export const createCarHandler = async (data: { brand: string; model: string; own
       details: {
         create: {
           id: ulid(),
-          cor: vehicleInfo.cor,
-          ano: vehicleInfo.ano,
-          anoModelo: vehicleInfo.anoModelo,
-          uf: vehicleInfo.uf,
-          municipio: vehicleInfo.municipio,
-          chassi: vehicleInfo.chassi,
-          dataAtualizacaoCaracteristicas: vehicleInfo.dataAtualizacaoCaracteristicasVeiculo,
-          dataAtualizacaoRouboFurto: vehicleInfo.dataAtualizacaoRouboFurto,
-          dataAtualizacaoAlarme: vehicleInfo.dataAtualizacaoAlarme,
+          cor: data.cor,
+          ano: data.ano,
+          anoModelo: data.anoModelo,
+          uf: data.uf,
+          municipio: data.municipio,
+          chassi: data.chassi,
+          dataAtualizacaoCaracteristicas: data.dataAtualizacaoCaracteristicas,
+          dataAtualizacaoRouboFurto: data.dataAtualizacaoRouboFurto,
+          dataAtualizacaoAlarme: data.dataAtualizacaoAlarme,
         },
       },
     },
   });
 
+  // Consulta o carro recém-criado com todos os detalhes
+  const createdCar = await prisma.car.findUnique({
+    where: { id: car.id },
+    include: { details: true },
+  });
+
   // Exclui o cache relacionado
   await deleteCache(CACHE_KEYS.MY_CARS(data.ownerId));
   await deleteCache(CACHE_KEYS.ALL_CARS);
+
+  // seta o cache para o carro criado
+  await setCache(CACHE_KEYS.CAR(createdCar.id), createdCar);
 
   return car;
 };

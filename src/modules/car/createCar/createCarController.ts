@@ -8,10 +8,21 @@ fastify.post(
     { preValidation: [fastify.authenticate] },
     async (request: FastifyRequest, reply: FastifyReply) => {
       
-      const { brand, model, plate } = request.body as {
+      const { brand, model, plate, cor, ano, anoModelo, uf, municipio, chassi, 
+        dataAtualizacaoCaracteristicas, dataAtualizacaoRouboFurto, 
+        dataAtualizacaoAlarme } = request.body as {
         brand: string;
         model: string;
         plate: string;
+        cor: string;
+        ano: string;
+        anoModelo: string;
+        uf: string;
+        municipio: string;
+        chassi: string;
+        dataAtualizacaoCaracteristicas: string;
+        dataAtualizacaoRouboFurto: string;
+        dataAtualizacaoAlarme: string;
       };
       fastify.log.info(`Creating a new car for userId: ${request.user.id}`);
       try {
@@ -20,6 +31,15 @@ fastify.post(
           model,
           ownerId: request.user.id,
           plate,
+          cor,
+          ano,
+          anoModelo,
+          uf,
+          municipio,
+          chassi,
+          dataAtualizacaoCaracteristicas,
+          dataAtualizacaoRouboFurto,
+          dataAtualizacaoAlarme
         });
         return reply.status(201).send(car);
       } catch (error) {

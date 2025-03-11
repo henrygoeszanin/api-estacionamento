@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import fp from 'fastify-plugin';
-import fastifyJwt from 'fastify-jwt';
+import fastifyJwt from '@fastify/jwt';
 
 export default fp(async (fastify) => {
   // Registra o plugin JWT com a opção de cookie
@@ -22,6 +22,7 @@ export default fp(async (fastify) => {
       const decoded = fastify.jwt.verify(token) as { id: string; email: string };
       request.user = { id: decoded.id, email: decoded.email };
     } catch (err) {
+      console.error(err);
       // Retorna erro 401 se a verificação falhar
       reply.status(401).send({ error: 'Unauthorized' });
     }
@@ -29,8 +30,8 @@ export default fp(async (fastify) => {
 });
 
 // Declaração do usuário no FastifyRequest
-// Estender a interface FastifyJWT no módulo fastify-jwt
-declare module 'fastify-jwt' {
+// Estender a interface FastifyJWT no módulo @fastify/jwt
+declare module '@fastify/jwt' {
   interface FastifyJWT {
     payload: { id: string; email: string }; // Tipo do payload
     user: {
